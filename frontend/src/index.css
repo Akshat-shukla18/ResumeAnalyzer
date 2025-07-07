@@ -13,9 +13,12 @@
   color-scheme: dark;
 }
 
- *{
-  scroll-behavior: smooth
+/* src/index.css */
+html, body {
+  height: auto;
+  overflow: hidden; /* Lenis handles scroll */
 }
+
 
 @layer base {
   body {
