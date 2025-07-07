@@ -4,7 +4,7 @@ import {
   HarmBlockThreshold,
 } from "@google/generative-ai";
 
-const API_KEY = "AIzaSyAMtIG0pYC0JvsihZT8V-MPPhv8qEdEjCc";
+const API_KEY = "Upload_your_Api_key_here";
 const MODEL_NAME = "models/gemini-1.5-flash"; // ✅ Verified working model
 
 const genAI = new GoogleGenerativeAI(API_KEY);
