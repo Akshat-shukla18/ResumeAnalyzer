@@ -37,29 +37,20 @@ const ResumeAnalyzer = () => {
   const analyzeResume = async () => {
     setLoading(true);
     try {
+      // Replace OpenAI API call with Gemini API call
       const response = await axios.post(
-        'https://api.openai.com/v1/chat/completions',
+        'https://api.gemini.com/v1/analyze',
         {
-          model: 'gpt-4',
-          messages: [
-            {
-              role: 'system',
-              content: 'You are an ATS system. Analyze this resume for structure, skills, formatting, and give a score with improvement tips.'
-            },
-            {
-              role: 'user',
-              content: resumeText
-            }
-          ],
-          temperature: 0.7,
+          text: resumeText,
         },
         {
           headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+            Authorization: `Bearer ${import.meta.env.VITE_GEMINI_API_KEY}`,
+            "Content-Type": "application/json",
           },
         }
       );
-      setAnalysis(response.data.choices[0].message.content);
+      setAnalysis(response.data.analysis || "No analysis returned.");
     } catch (err) {
       console.error(err);
       alert('Something went wrong.');

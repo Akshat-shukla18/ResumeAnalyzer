@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./UploadResumeModal.css";
-import axios from "axios";
 import * as pdfjsLib from "pdfjs-dist";
 import pdfjsWorker from "pdfjs-dist/build/pdf.worker.js?worker";
+import runChat from "../utils/runChat";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
@@ -13,6 +13,7 @@ const UploadResumeModal = ({ isOpen, onClose }) => {
   const [file, setFile] = useState(null);
   const [description, setDescription] = useState("");
   const [analysisText, setAnalysisText] = useState("");
+  const [extractedText, setExtractedText] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -62,33 +63,13 @@ const UploadResumeModal = ({ isOpen, onClose }) => {
     setLoading(true);
     try {
       const resumeText = await extractTextFromPDF(file);
+      // setExtractedText(resumeText); // No need to store extracted text separately now
 
-      const response = await axios.post(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          model: "gpt-4",
-          messages: [
-            {
-              role: "system",
-              content:
-                "You are an ATS system. Analyze this resume for structure, skills, formatting, and give a score with improvement suggestions.",
-            },
-            {
-              role: "user",
-              content: resumeText,
-            },
-          ],
-          temperature: 0.7,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      // Use runChat function to get analysis from Gemini API
+      const prompt = "You are an ATS resume analyzer. Analyze this resume for structure, skills, formatting, and give a score with improvement suggestions.\n\n" + resumeText;
+      const analysis = await runChat(prompt);
 
-      setAnalysisText(response.data.choices[0].message.content);
+      setAnalysisText(analysis);
     } catch (error) {
       console.error("Analysis failed:", error);
       setAnalysisText("Failed to analyze resume. Try again later.");
@@ -138,11 +119,37 @@ const UploadResumeModal = ({ isOpen, onClose }) => {
         </button>
 
         {analysisText && (
-          <div className="mt-6 bg-white text-black p-4 rounded shadow max-h-[400px] overflow-y-auto">
-            <h3 className="text-xl font-semibold mb-2">ATS Analysis:</h3>
-            <pre className="whitespace-pre-wrap">{analysisText}</pre>
-          </div>
+          <>
+            <div
+              className="fixed inset-y-6  bg-blue-400 bg-opacity-95 flex items-start justify-start z-90 p-4  backdrop-blur-sm"
+              style={{ width: "100vh", height:"100vh", maxHeight:"80vh", borderLeft: "8px solid #1f2937", boxShadow: "0 0 15px 3px #4f46e5" }}
+              onClick={() => setAnalysisText("")}
+            >
+              <div
+                className="bg-blue-900 text-white p-6 rounded-lg shadow-lg w-full h-full overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  className="mb-4 px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                  onClick={() => setAnalysisText("")}
+                >
+                  Close
+                </button>
+                <h3 className="text-2xl font-bold mb-4">ATS Analysis</h3>
+                <pre className="whitespace-pre-wrap">
+                  {analysisText.split(/(skills|score|improvement|formatting)/gi).map((part, i) =>
+                    ["skills", "score", "improvement", "formatting"].includes(part.toLowerCase()) ? (
+                      <mark key={i} className="bg-yellow-300 font-semibold">{part}</mark>
+                    ) : (
+                      part
+                    )
+                  )}
+                </pre>
+              </div>
+            </div>
+          </>
         )}
+        {/* Removed extractedText display as per user request */}
       </div>
     </div>
   );
