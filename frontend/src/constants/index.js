@@ -119,8 +119,8 @@ export const roadmap = [
   },
   {
     id: "3",
-    title: "Integration with APIs",
-    text: "Allow the chatbot to access external data sources, such as weather APIs or news APIs, to provide more relevant recommendations.",
+    title: "Enhance it now!",
+    text: "Let our AI to get your's resume to stand in this computing world, lets roll onto latest  provide more relevant recommendations.",
     date: "May 2023",
     status: "progress",
     imageUrl: roadmap4,
