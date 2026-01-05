@@ -3,11 +3,11 @@ import {
   HarmCategory,
   HarmBlockThreshold,
 } from "@google/generative-ai";
+import dotenv from "dotenv";
 
-const API_KEY = "YOUR_GOOGLE_API_KEY_HERE";
+dotenv.config();
 
-
-
+const API_KEY = process.env.REACT_APP_GEMINI_API_KEY || "Upload_your_Api_key_here";
 const MODEL_NAME = "models/gemini-1.5-flash"; // ✅ Verified working model
 
 const genAI = new GoogleGenerativeAI(API_KEY);
