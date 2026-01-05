@@ -4,8 +4,8 @@
   "description": "Backend for Brainwave app with signup and signin using JWT and MongoDB",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "nodemon server.js",
+    "dev": "node server.js"
   },
   "dependencies": {
     "axios": "^1.10.0",
