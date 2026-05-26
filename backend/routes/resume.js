@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-// Test route for resume API
+// Test route for resume api
 router.get('/test', (req, res) => {
   res.json({ message: 'Resume route is working' });
 });
