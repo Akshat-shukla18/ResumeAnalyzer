@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Lenis from '@studio-freight/lenis';
+ import Lenis from '@studio-freight/lenis';
 
 // Component imports
 import ButtonGradient from "./assets/svg/ButtonGradient";

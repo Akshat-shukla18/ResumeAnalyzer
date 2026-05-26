@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./UploadResumeModal.css";
 import * as pdfjsLib from "pdfjs-dist";
-import pdfjsWorker from "pdfjs-dist/build/pdf.worker.js?worker";
+import pdfjsWorker from "pdfjs-dist/build/pdf.worker?url";
 import runChat from "../utils/runChat";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
