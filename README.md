@@ -2,6 +2,7 @@
 <img width="996" height="899" margin-left="10px" alt="Screenshot 2025-07-07 114122" src="https://github.com/user-attachments/assets/d2fa17d1-4127-4afb-a46f-a3b942e21191" />
 
 
+
 ### Analyze, Improve, and Optimize Your Resume for Better Career Opportunities
 
 Resume Analysis using AI is a full-stack MERN application that helps users evaluate resumes and professional documents through intelligent analysis. The platform provides detailed feedback, ATS-oriented recommendations, and improvement suggestions while offering a modern, responsive, and user-friendly interface.
